@@ -11,6 +11,7 @@ const Home = ({isAuthenticated}) => {
 
     useEffect(() => {
         setSelectedCategory(searchParams.get('filter'));
+        setShowRandomJoke(Boolean(searchParams.get('random')));
     }, [searchParams]);
 
     const jokes = [
@@ -115,12 +116,18 @@ const Home = ({isAuthenticated}) => {
 
     ];
     const [selectedCategory, setSelectedCategory] = useState('All');
+    const [showRandomJoke, setShowRandomJoke] = useState(false);
 
     // Фильтрация анекдотов по выбранной категории
-    const filteredJokes = selectedCategory === null
+    let filteredJokes = selectedCategory === null
     || selectedCategory === 'All'
         ? jokes
         : jokes.filter(joke => joke.tags.includes(selectedCategory));
+
+    if (showRandomJoke) {
+        const randomIndex = Math.floor(Math.random() * jokes.length);
+        filteredJokes = jokes.slice(randomIndex, randomIndex + 1);
+    }
 
     // Вычисляем индекс первого и последнего анекдота на текущей странице
     const indexOfLastJoke = currentPage * jokesPerPage;
