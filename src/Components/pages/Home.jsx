@@ -1,6 +1,11 @@
 import JokeCard from "../JokeCard";
+import Pagination from "./Pagination";
+import {useState} from "react";
 
 const Home = () => {
+    const [currentPage, setCurrentPage] = useState(1);
+    const [jokesPerPage] = useState(10); // Количество анекдотов на одной странице
+
     const jokes = [
         {
             title: "Funny Joke 1",
@@ -15,12 +20,37 @@ const Home = () => {
             tags: ["hilarious", "silly"],
             likes: 34,
             date: "2023-07-11T00:00:00Z"
-        }
+        },
+        {
+            title: "Another Joke",
+            text: "Here's another hilarious joke!",
+            tags: ["hilarious", "silly"],
+            likes: 34,
+            date: "2023-07-11T00:00:00Z"
+        },
+        {
+            title: "Another Joke",
+            text: "Here's another hilarious joke!",
+            tags: ["hilarious", "silly"],
+            likes: 34,
+            date: "2023-07-11T00:00:00Z"
+        },
+        {
+            title: "Another Joke",
+            text: "Here's another hilarious joke!",
+            tags: ["hilarious", "silly"],
+            likes: 34,
+            date: "2023-07-11T00:00:00Z"
+        },
     ];
+// Вычисляем индекс первого и последнего анекдота на текущей странице
+    const indexOfLastJoke = currentPage * jokesPerPage;
+    const indexOfFirstJoke = indexOfLastJoke - jokesPerPage;
+    const currentJokes = jokes.slice(indexOfFirstJoke, indexOfLastJoke);
 
     return (
         <div>
-            {jokes.map((joke, index) => (
+            {currentJokes.map((joke, index) => (
                 <JokeCard
                     key={index}
                     title={joke.title}
@@ -30,6 +60,14 @@ const Home = () => {
                     date={joke.date}
                 />
             ))}
+
+            {/* Компонент пагинации */}
+            <Pagination
+                jokesPerPage={jokesPerPage}
+                totalJokes={jokes.length}
+                currentPage={currentPage}
+                paginate={setCurrentPage}
+            />
         </div>
     );
 }
