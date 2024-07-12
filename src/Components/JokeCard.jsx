@@ -3,11 +3,15 @@ import {Card, Badge} from 'react-bootstrap';
 import likeIcon from '../img/like.svg';
 import './JokeCard.css'; // Подключаем стили
 
-const JokeCard = ({title, text, tags, date}) => {
+const JokeCard = ({isAuthenticated, title, text, tags, date}) => {
     const [likes, setLikes] = useState(0)
 
     function handleClick() {
-        setLikes(likes + 1);
+        if (isAuthenticated) {
+            setLikes(likes + 1);
+        } else {
+            alert('You need to be signed in to like jokes!');
+        }
     }
 
     return (

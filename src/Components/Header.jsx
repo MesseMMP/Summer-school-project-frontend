@@ -10,7 +10,7 @@ import {
 import logo from "../img/logo.svg";
 import {useSearchParams} from "react-router-dom";
 
-const Header = () => {
+const Header = ({ isAuthenticated, handleLogout }) => {
 
     const setSearchParams = useSearchParams()[1];
 
@@ -38,8 +38,17 @@ const Header = () => {
                         style={{maxHeight: '100px'}}
                         navbarScroll
                     >
-                        <Nav.Link href="/login">Sign in</Nav.Link>
-                        <Nav.Link href="/register">Sign up</Nav.Link>
+                        {isAuthenticated ? (
+                            <>
+                                <Nav.Link href="/profile">Profile</Nav.Link>
+                                <Nav.Link href="#" onClick={handleLogout}>Logout</Nav.Link>
+                            </>
+                        ) : (
+                            <>
+                                <Nav.Link href="/login">Sign in</Nav.Link>
+                                <Nav.Link href="/register">Sign up</Nav.Link>
+                            </>
+                        )}
                         <Nav.Link href="#action2">Random joke</Nav.Link>
                         <NavDropdown title="Categories" id="basic-nav-dropdown">
                             <NavDropdown.Item onClick={() => clickHandler("general")}>General</NavDropdown.Item>

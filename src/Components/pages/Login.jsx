@@ -1,15 +1,18 @@
 import React, {useState} from 'react';
 import {Form, Button, Card} from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({handleLogin}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Implement login logic here
-        console.log({email, password});
-    }
+        // Логика для авторизации пользователя
+        handleLogin();
+        navigate('/');
+    };
 
     return (
         <Card className="mt-5">
