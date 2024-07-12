@@ -13,7 +13,7 @@ const Header = () => {
     return (
         <Navbar expand="lg" className="bg-body-tertiary">
             <Container fluid>
-                <Navbar.Brand href="#home">
+                <Navbar.Brand href="/">
                     <img
                         alt="logo"
                         src={logo}
@@ -30,7 +30,8 @@ const Header = () => {
                         style={{maxHeight: '100px'}}
                         navbarScroll
                     >
-                        <Nav.Link href="#action1">Home</Nav.Link>
+                        <Nav.Link href="/login">Sign in</Nav.Link>
+                        <Nav.Link href="/register">Sign up</Nav.Link>
                         <Nav.Link href="#action2">Random joke</Nav.Link>
                         <NavDropdown title="Categories" id="basic-nav-dropdown">
                             <NavDropdown.Item href="#action/3.1">Politics</NavDropdown.Item>
