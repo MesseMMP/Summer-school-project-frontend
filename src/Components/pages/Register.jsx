@@ -7,6 +7,8 @@ const Register = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [adminSecret, setAdminSecret] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -15,7 +17,9 @@ const Register = () => {
             const response = await axios.post('http://127.0.0.1:8008/register', {
                 username,
                 email,
-                password
+                password,
+                isAdmin,
+                adminSecret
             });
             alert(response.data.message);
             if (response.status === 201) {
@@ -61,7 +65,28 @@ const Register = () => {
                         />
                     </Form.Group>
 
-                    <Button variant="primary" type="submit" className="mt-3">
+                    <Form.Group controlId="formBasicAdmin">
+                        <Form.Check
+                            type="checkbox"
+                            label="I am admin"
+                            checked={isAdmin}
+                            onChange={(e) => setIsAdmin(e.target.checked)}
+                        />
+                    </Form.Group>
+
+                    {isAdmin && (
+                        <Form.Group controlId="formBasicAdminSecret">
+                            <Form.Label>Admin Secret</Form.Label>
+                            <Form.Control
+                                type="password"
+                                placeholder="Enter admin secret"
+                                value={adminSecret}
+                                onChange={(e) => setAdminSecret(e.target.value)}
+                            />
+                        </Form.Group>
+                    )}
+
+                    <Button variant="outline-primary" type="submit" className="mt-3">
                         Register
                     </Button>
                 </Form>

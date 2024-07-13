@@ -48,7 +48,7 @@ const Login = ({handleLogin}) => {
                         />
                     </Form.Group>
 
-                    <Button variant="primary" type="submit" className="mt-3">
+                    <Button variant="outline-primary" type="submit" className="mt-3">
                         Login
                     </Button>
                 </Form>

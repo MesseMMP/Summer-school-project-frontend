@@ -9,7 +9,18 @@ import NewJokeForm from "./Components/pages/NewJoke";
 
 const App = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const categories = ['General', 'Politics', 'School', 'Technology', 'Food', 'Sports', 'Travel', 'Work', 'Animals']
+    const categories = [
+        "General",
+        "Technology",
+        "Science",
+        "Politics",
+        "Sports",
+        "Animals",
+        "School",
+        "Work",
+        "Adventure"
+    ];
+
     // Загружаем состояние авторизации из localStorage при начальной загрузке
     useEffect(() => {
         const authStatus = localStorage.getItem('isAuthenticated');

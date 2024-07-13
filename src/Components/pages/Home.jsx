@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import {useSearchParams} from "react-router-dom";
 import axios from "axios";
 
-const Home = ({isAuthenticated}) => {
+const Home = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [jokesPerPage] = useState(10); // Количество анекдотов на одной странице
 
