@@ -1,17 +1,10 @@
-.like-button {
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
+.author-name {
+    font-weight: bold;
+    color: #555;
     display: flex;
     align-items: center;
 }
 
-.like-button img {
-    display: block;
-}
-
-.like-button:hover {
-    transform: scale(1.1);
-    transition: 0.25s;
+.author-name i {
+    margin-right: 5px;
 }

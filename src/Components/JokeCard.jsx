@@ -1,18 +1,27 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Card, Badge} from 'react-bootstrap';
-import likeIcon from '../img/like.svg';
-import './JokeCard.css'; // Подключаем стили
+import './JokeCard.css';
+import axios from "axios";
 
-const JokeCard = ({isAuthenticated, title, text, tags, date}) => {
-    const [likes, setLikes] = useState(0)
+const JokeCard = ({title, text, tags, date, userId}) => {
 
-    function handleClick() {
-        if (isAuthenticated) {
-            setLikes(likes + 1);
-        } else {
-            alert('You need to be signed in to like jokes!');
-        }
-    }
+    const parsedTags = tags ? tags.split(',').map(tag => tag.trim()) : [];
+
+    const [author, setAuthor] = useState('');
+
+    useEffect(() => {
+        // Функция для получения имени автора анекдота
+        const fetchAuthor = async () => {
+            try {
+                const response = await axios.get(`http://127.0.0.1:8008/user/${userId}`);
+                setAuthor(response.data.username);
+            } catch (error) {
+                setAuthor("Unknown");
+            }
+        };
+
+        fetchAuthor();
+    }, [userId]);
 
     return (
         <Card className="mb-3">
@@ -20,23 +29,15 @@ const JokeCard = ({isAuthenticated, title, text, tags, date}) => {
                 <Card.Title>{title}</Card.Title>
                 <Card.Text>{text}</Card.Text>
                 <div className="mb-2">
-                    {tags.map((tag, index) => (
+                    {parsedTags.map((tag, index) => (
                         <Badge bg="secondary" key={index} className="me-1">{tag}</Badge>
                     ))}
                 </div>
                 <div className="d-flex justify-content-between align-items-center">
                     <small className="text-muted">{new Date(date).toLocaleDateString()}</small>
-                    <div className="d-flex align-items-center">
-                        <button className="like-button" onClick={handleClick}>
-                            <img
-                                src={likeIcon}
-                                alt="like icon"
-                                width="20"
-                                height="20"
-                                className="me-1"
-                            />
-                        </button>
-                        <span>{likes}</span>
+                    <div className="d-flex align-items-center author-info">
+                        <span className="author-label">Author:</span>
+                        <span className="author-name ms-2">{author}</span>
                     </div>
                 </div>
             </Card.Body>

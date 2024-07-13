@@ -8,11 +8,12 @@ import {
     Button,
 } from "react-bootstrap";
 import logo from "../img/logo.svg";
-import {useSearchParams} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
 
-const Header = ({isAuthenticated, handleLogout}) => {
+const Header = ({categories, isAuthenticated, handleLogout}) => {
 
     const setSearchParams = useSearchParams()[1];
+    const navigate = useNavigate();
 
     const clickCategoryHandler = (filterValue) => {
         setSearchParams({filter: filterValue});
@@ -21,6 +22,11 @@ const Header = ({isAuthenticated, handleLogout}) => {
     const clickRandomJoke = (value) => {
         setSearchParams({random: value});
     }
+
+    const handleNewJokeClick = () => {
+        navigate('/create-joke');
+    };
+
 
     return (
         <Navbar expand="lg" className="bg-body-tertiary">
@@ -44,7 +50,7 @@ const Header = ({isAuthenticated, handleLogout}) => {
                     >
                         {isAuthenticated ? (
                             <>
-                                <Nav.Link href="/profile">Profile</Nav.Link>
+                                <Nav.Link onClick={handleNewJokeClick}>New Joke</Nav.Link>
                                 <Nav.Link href="" onClick={handleLogout}>Logout</Nav.Link>
                             </>
                         ) : (
@@ -55,18 +61,11 @@ const Header = ({isAuthenticated, handleLogout}) => {
                         )}
                         <Nav.Link onClick={() => clickRandomJoke("true")}>Random joke</Nav.Link>
                         <NavDropdown title="Categories" id="basic-nav-dropdown">
-                            <NavDropdown.Item onClick={() => clickCategoryHandler("general")}>General</NavDropdown.Item>
-                            <NavDropdown.Item
-                                onClick={() => clickCategoryHandler("politics")}>Politics</NavDropdown.Item>
-                            <NavDropdown.Item onClick={() => clickCategoryHandler("school")}>School</NavDropdown.Item>
-                            <NavDropdown.Item
-                                onClick={() => clickCategoryHandler("technology")}>Technology</NavDropdown.Item>
-                            <NavDropdown.Item onClick={() => clickCategoryHandler("food")}>Food</NavDropdown.Item>
-                            <NavDropdown.Item onClick={() => clickCategoryHandler("sports")}>Sports</NavDropdown.Item>
-                            <NavDropdown.Item onClick={() => clickCategoryHandler("travel")}>Travel</NavDropdown.Item>
-                            <NavDropdown.Item onClick={() => clickCategoryHandler("work")}>Work</NavDropdown.Item>
-                            <NavDropdown.Item onClick={() => clickCategoryHandler("animals")}>Animals</NavDropdown.Item>
-                            <NavDropdown.Item onClick={() => clickCategoryHandler("health")}>Health</NavDropdown.Item>
+                            {categories.map((category, index) => (
+                                <NavDropdown.Item key={index} onClick={() => clickCategoryHandler(category)}>
+                                    {category}
+                                </NavDropdown.Item>
+                            ))}
                         </NavDropdown>
                     </Nav>
                     <Form className="d-flex">

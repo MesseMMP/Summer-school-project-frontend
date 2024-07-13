@@ -1,17 +1,26 @@
 import React, {useState} from 'react';
 import {Form, Button, Card} from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+import axios from 'axios';
 
 const Login = ({handleLogin}) => {
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Логика для авторизации пользователя
-        handleLogin();
-        navigate('/');
+        try {
+            const response = await axios.post('http://127.0.0.1:8008/login', {
+                username,
+                password
+            });
+            localStorage.setItem('token', response.data.access_token);
+            handleLogin();
+            navigate('/');
+        } catch (error) {
+            alert(error.response.data.message);
+        }
     };
 
     return (
@@ -19,13 +28,13 @@ const Login = ({handleLogin}) => {
             <Card.Body>
                 <Card.Title>Login</Card.Title>
                 <Form onSubmit={handleSubmit}>
-                    <Form.Group controlId="formBasicEmail">
-                        <Form.Label>Email address</Form.Label>
+                    <Form.Group controlId="formBasicUsername">
+                        <Form.Label>Username</Form.Label>
                         <Form.Control
-                            type="email"
-                            placeholder="Enter email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            type="text"
+                            placeholder="Enter username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                         />
                     </Form.Group>
 
@@ -46,6 +55,6 @@ const Login = ({handleLogin}) => {
             </Card.Body>
         </Card>
     );
-}
+};
 
 export default Login;
