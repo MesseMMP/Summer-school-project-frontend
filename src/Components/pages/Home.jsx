@@ -47,6 +47,28 @@ const Home = () => {
     const indexOfLastJoke = currentPage * jokesPerPage;
     const indexOfFirstJoke = indexOfLastJoke - jokesPerPage;
     const currentJokes = filteredJokes.slice(indexOfFirstJoke, indexOfLastJoke);
+    const [isAdmin, setAdmin] = useState(false);
+
+    useEffect(() => {
+
+        const checkAdmin = async () => {
+            try {
+                const response = await axios.get(`http://127.0.0.1:8008/check-admin`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+                if (response.data.isAdmin === 'true') {
+                    setAdmin(true);
+                } else {
+                    setAdmin(false);
+                }
+            } catch (error) {
+                setAdmin(false);
+            }
+        };
+        checkAdmin();
+    })
 
 
     return (
@@ -54,11 +76,13 @@ const Home = () => {
             {currentJokes.map((joke, index) => (
                 <JokeCard
                     key={index}
+                    jokeId={joke.id}
                     title={joke.title}
                     text={joke.text}
                     tags={joke.tags}
                     date={joke.date}
                     userId={joke.userId}
+                    isAdmin={isAdmin}
                 />
             ))}
 

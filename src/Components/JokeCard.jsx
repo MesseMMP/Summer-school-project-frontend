@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {Card, Badge} from 'react-bootstrap';
+import {Card, Badge, Button} from 'react-bootstrap';
 import './JokeCard.css';
 import axios from "axios";
 
-const JokeCard = ({title, text, tags, date, userId}) => {
+const JokeCard = ({jokeId, title, text, tags, date, userId, isAdmin}) => {
 
     const parsedTags = tags ? tags.split(',').map(tag => tag.trim()) : [];
 
     const [author, setAuthor] = useState('');
 
+
     useEffect(() => {
-        // Функция для получения имени автора анекдота
         const fetchAuthor = async () => {
             try {
                 const response = await axios.get(`http://127.0.0.1:8008/user/${userId}`);
@@ -20,8 +20,23 @@ const JokeCard = ({title, text, tags, date, userId}) => {
             }
         };
 
+
         fetchAuthor();
+
     }, [userId]);
+
+    const handleDelete = async () => {
+        try {
+            const response = await axios.delete(`http://127.0.0.1:8008/delete-joke/${jokeId}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            alert(response.data.message);
+        } catch (error) {
+            alert('An error occurred while deleting the joke');
+        }
+    };
 
     return (
         <Card className="mb-3">
@@ -39,6 +54,11 @@ const JokeCard = ({title, text, tags, date, userId}) => {
                         <span className="author-label">Author:</span>
                         <span className="author-name ms-2">{author}</span>
                     </div>
+                    {isAdmin && (
+                        <Button variant="danger" className="ms-3" onClick={handleDelete}>
+                            Delete
+                        </Button>
+                    )}
                 </div>
             </Card.Body>
         </Card>
