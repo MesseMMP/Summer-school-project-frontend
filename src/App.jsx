@@ -9,6 +9,11 @@ import NewJokeForm from "./Components/pages/NewJoke";
 
 const App = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [jokeCount, setJokeCount] = useState(0);
+
+    const updateJokeCount = (number) => {
+        setJokeCount(number);
+    };
     const categories = [
         "General",
         "Technology",
@@ -45,10 +50,11 @@ const App = () => {
     return (
         <Router>
             <div className="App">
-                <Header categories={categories} isAuthenticated={isAuthenticated} handleLogout={handleLogout}/>
+                <Header categories={categories} isAuthenticated={isAuthenticated} handleLogout={handleLogout}
+                        jokeCount={jokeCount}/>
                 <div className="container mt-3">
                     <Routes>
-                        <Route path="/" element={<Home isAuthenticated={isAuthenticated}/>}/>
+                        <Route path="/" element={<Home updateJokeCount={updateJokeCount}/>}/>
                         <Route path="/login" element={<Login handleLogin={handleLogin}/>}/>
                         <Route path="/register" element={<Register/>}/>
                         <Route path="/create-joke" element={<NewJokeForm categories={categories}/>}

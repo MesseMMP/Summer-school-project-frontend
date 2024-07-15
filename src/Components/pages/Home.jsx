@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import {useSearchParams} from "react-router-dom";
 import axios from "axios";
 
-const Home = () => {
+const Home = ({updateJokeCount}) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [jokesPerPage] = useState(10); // Количество анекдотов на одной странице
 
@@ -29,7 +29,8 @@ const Home = () => {
 
     useEffect(() => {
         getJokes()
-    }, [])
+        updateJokeCount(jokes.length);
+    }, [jokes.length, updateJokeCount])
 
 
     // Фильтрация анекдотов по выбранной категории
@@ -83,6 +84,7 @@ const Home = () => {
                     date={joke.date}
                     userId={joke.userId}
                     isAdmin={isAdmin}
+                    getJokesAgain={getJokes}
                 />
             ))}
 

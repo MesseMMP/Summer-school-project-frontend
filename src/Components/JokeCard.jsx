@@ -3,7 +3,7 @@ import {Card, Badge, Button} from 'react-bootstrap';
 import './JokeCard.css';
 import axios from "axios";
 
-const JokeCard = ({jokeId, title, text, tags, date, userId, isAdmin}) => {
+const JokeCard = ({jokeId, title, text, tags, date, userId, isAdmin, getJokesAgain}) => {
 
     const parsedTags = tags ? tags.split(',').map(tag => tag.trim()) : [];
 
@@ -33,6 +33,7 @@ const JokeCard = ({jokeId, title, text, tags, date, userId, isAdmin}) => {
                 }
             });
             alert(response.data.message);
+            getJokesAgain()
         } catch (error) {
             alert('An error occurred while deleting the joke');
         }
