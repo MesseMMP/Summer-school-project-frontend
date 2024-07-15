@@ -2,8 +2,22 @@ import React, {useEffect, useState} from 'react';
 import {Card, Badge, Button} from 'react-bootstrap';
 import './JokeCard.css';
 import axios from "axios";
+import likedIcon from '../img/liked.svg'
+import unlikedIcon from '../img/unliked.svg'
 
-const JokeCard = ({jokeId, title, text, tags, date, userId, isAdmin, getJokesAgain}) => {
+const JokeCard = ({
+                      jokeId,
+                      title,
+                      text,
+                      tags,
+                      date,
+                      likes,
+                      isLiked,
+                      isAuthenticated,
+                      userId,
+                      isAdmin,
+                      getJokesAgain
+                  }) => {
 
     const parsedTags = tags ? tags.split(',').map(tag => tag.trim()) : [];
 
@@ -35,9 +49,28 @@ const JokeCard = ({jokeId, title, text, tags, date, userId, isAdmin, getJokesAga
             alert(response.data.message);
             getJokesAgain()
         } catch (error) {
-            alert('An error occurred while deleting the joke');
+            alert('An error occurred while deleting the joke!');
         }
     };
+
+    const handleLike = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.post(`http://127.0.0.1:8008/like-post/${jokeId}`, null, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            alert(response.data.message);
+            getJokesAgain(); // обновить шутки после изменения лайка
+        } catch (error) {
+            alert('You need to be signed in to like posts!');
+        }
+    };
+
+    function handleClick() {
+        handleLike()
+    }
 
     return (
         <Card className="mb-3">
@@ -54,6 +87,18 @@ const JokeCard = ({jokeId, title, text, tags, date, userId, isAdmin, getJokesAga
                     <div className="d-flex align-items-center author-info">
                         <span className="author-label">Author:</span>
                         <span className="author-name ms-2">{author}</span>
+                    </div>
+                    <div className="d-flex align-items-center">
+                        <button className="like-button" onClick={handleClick}>
+                            <img
+                                src={isAuthenticated ? (isLiked ? likedIcon : unlikedIcon) : unlikedIcon}
+                                alt="like icon"
+                                width="20"
+                                height="20"
+                                className="me-1"
+                            />
+                        </button>
+                        <span>{likes}</span>
                     </div>
                     {isAdmin && (
                         <Button variant="danger" className="ms-3" onClick={handleDelete}>

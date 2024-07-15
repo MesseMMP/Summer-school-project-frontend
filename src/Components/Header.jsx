@@ -4,7 +4,6 @@ import {
     Container,
     Nav,
     NavDropdown,
-    Badge,
 } from "react-bootstrap";
 import logo from "../img/logo.svg";
 import {useNavigate, useSearchParams} from "react-router-dom";
@@ -43,12 +42,6 @@ const Header = ({categories, isAuthenticated, handleLogout, jokeCount}) => {
                     </Navbar.Brand>
                 </div>
                 <div className="d-flex flex-column align-items-center">
-                    <div className="d-flex align-items-center">
-                        <span className="me-2">Total Jokes on Site:</span>
-                        <Badge pill bg={"primary"}>
-                            {jokeCount}
-                        </Badge>
-                    </div>
                     <span className="welcome-message">Enjoy your stay and explore jokes!</span>
                 </div>
                 <div className="d-flex align-items-center">
