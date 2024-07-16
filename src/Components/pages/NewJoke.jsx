@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Form, Button, Card} from 'react-bootstrap';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 import {toast} from "react-toastify";
 
-const NewJokeForm = ({categories}) => {
+
+const NewJokeForm = ({categories, isAuthenticated}) => {
     const [title, setTitle] = useState('');
     const [text, setText] = useState('');
     const [selectedTags, setSelectedTags] = useState([]);
@@ -27,7 +28,7 @@ const NewJokeForm = ({categories}) => {
                 navigate('/');
             }
         } catch (error) {
-            toast.error(error.response);
+            toast.error('You need to be signed in to post jokes!');
         }
     };
 
@@ -39,8 +40,14 @@ const NewJokeForm = ({categories}) => {
         }
     };
 
+    useEffect(() => {
+        if (!isAuthenticated) {
+            navigate('/')
+        }
+    }, [isAuthenticated, navigate]);
+
     return (
-        <Card className="mt-5">
+        <Card className="card-bg" id="new-joke-card">
             <Card.Body>
                 <Card.Title>Create New Joke</Card.Title>
                 <Form onSubmit={handleSubmit}>

@@ -32,7 +32,7 @@ const Register = () => {
     };
 
     return (
-        <Card className="mt-5">
+        <Card className="mt-5" id="reg-card">
             <Card.Body>
                 <Card.Title>Register</Card.Title>
                 <Form onSubmit={handleSubmit}>

@@ -78,7 +78,7 @@ const JokeCard = ({
     }
 
     return (
-        <Card className="mb-3">
+        <Card className="mb-3" id="joke-card">
             <Card.Body>
                 <Card.Title>{title}</Card.Title>
                 <Card.Text>{text}</Card.Text>

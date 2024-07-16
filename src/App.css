@@ -1,0 +1,11 @@
+.Toastify__toast-container {
+    width: 30vw; /* Увеличиваем общую ширину */
+}
+
+.Toastify__toast {
+    font-size: 17px;
+}
+
+#joke-card, #reg-card, #log-card, #new-joke-card {
+    background-color: #f5f5f5;
+}

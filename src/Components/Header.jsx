@@ -32,7 +32,7 @@ const Header = ({categories, isAuthenticated, handleLogout}) => {
 
 
     return (
-        <Navbar expand="lg" className="bg-body-tertiary">
+        <Navbar expand="lg" className="bg-body-tertiary" variant="light" id="navbar">
             <Container fluid className="d-flex justify-content-between align-items-center">
                 <div className="d-flex align-items-center">
                     <Navbar.Brand href="/">
