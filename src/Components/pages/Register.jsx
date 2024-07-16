@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Form, Button, Card} from 'react-bootstrap';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
 
 const Register = () => {
     const [username, setUsername] = useState('');
@@ -21,12 +22,12 @@ const Register = () => {
                 isAdmin,
                 adminSecret
             });
-            alert(response.data.message);
+            toast.success(response.data.message);
             if (response.status === 201) {
                 navigate('/login');
             }
         } catch (error) {
-            alert(error.response.data.message);
+            toast.error(error.response.data.message);
         }
     };
 

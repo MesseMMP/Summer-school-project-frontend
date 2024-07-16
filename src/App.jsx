@@ -5,6 +5,8 @@ import Login from "./Components/pages/Login";
 import Register from "./Components/pages/Register";
 import {useEffect, useState} from "react";
 import NewJokeForm from "./Components/pages/NewJoke";
+import {ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 const App = () => {
@@ -49,7 +51,7 @@ const App = () => {
                 <Header categories={categories} isAuthenticated={isAuthenticated} handleLogout={handleLogout}/>
                 <div className="container mt-3">
                     <Routes>
-                        <Route path="/" element={<Home isAuthenticated={isAuthenticated} />}/>
+                        <Route path="/" element={<Home isAuthenticated={isAuthenticated}/>}/>
                         <Route path="/login" element={<Login handleLogin={handleLogin}/>}/>
                         <Route path="/register" element={<Register/>}/>
                         <Route path="/create-joke" element={<NewJokeForm categories={categories}/>}
@@ -57,6 +59,7 @@ const App = () => {
                     </Routes>
                 </div>
             </div>
+            <ToastContainer />
         </Router>
     );
 }

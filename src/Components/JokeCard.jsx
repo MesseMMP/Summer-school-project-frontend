@@ -4,6 +4,7 @@ import './JokeCard.css';
 import axios from "axios";
 import likedIcon from '../img/liked.svg'
 import unlikedIcon from '../img/unliked.svg'
+import { toast } from 'react-toastify';
 
 const JokeCard = ({
                       jokeId,
@@ -46,10 +47,14 @@ const JokeCard = ({
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             });
-            alert(response.data.message);
+            toast.success(response.data.message, {
+                position: toast.POSITION.TOP_RIGHT,
+            });
             getJokesAgain()
         } catch (error) {
-            alert('An error occurred while deleting the joke!');
+            toast.error('An error occurred while deleting the joke!', {
+                position: toast.POSITION.TOP_RIGHT,
+            });
         }
     };
 
@@ -61,10 +66,10 @@ const JokeCard = ({
                     Authorization: `Bearer ${token}`
                 }
             });
-            alert(response.data.message);
+            toast.success(response.data.message);
             getJokesAgain(); // обновить шутки после изменения лайка
         } catch (error) {
-            alert('You need to be signed in to like posts!');
+            toast.error('You need to be signed in to like posts!');
         }
     };
 

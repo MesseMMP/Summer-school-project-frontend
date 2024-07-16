@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Form, Button, Card} from 'react-bootstrap';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
+import {toast} from "react-toastify";
 
 const NewJokeForm = ({categories}) => {
     const [title, setTitle] = useState('');
@@ -21,12 +22,12 @@ const NewJokeForm = ({categories}) => {
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             });
-            alert(response.data.message);
+            toast.success(response.data.message);
             if (response.status === 201) {
                 navigate('/');
             }
         } catch (error) {
-            alert(error.response);
+            toast.error(error.response);
         }
     };
 

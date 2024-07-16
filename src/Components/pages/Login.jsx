@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Form, Button, Card} from 'react-bootstrap';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
+import {toast} from "react-toastify";
 
 const Login = ({handleLogin}) => {
     const [username, setUsername] = useState('');
@@ -17,9 +18,10 @@ const Login = ({handleLogin}) => {
             });
             localStorage.setItem('token', response.data.access_token);
             handleLogin();
+            toast.success(`Welcome back, ${username}!`);
             navigate('/');
         } catch (error) {
-            alert(error.response.data.message);
+            toast.error(error.response.data.message);
         }
     };
 
