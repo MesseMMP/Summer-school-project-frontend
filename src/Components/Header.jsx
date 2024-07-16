@@ -8,9 +8,10 @@ import {
 import logo from "../img/logo.svg";
 import {useNavigate, useSearchParams} from "react-router-dom";
 
-const Header = ({categories, isAuthenticated, handleLogout, jokeCount}) => {
+const Header = ({categories, isAuthenticated, handleLogout}) => {
 
     const setSearchParams = useSearchParams()[1];
+
     const navigate = useNavigate();
 
     const clickCategoryHandler = (filterValue) => {
@@ -19,6 +20,10 @@ const Header = ({categories, isAuthenticated, handleLogout, jokeCount}) => {
 
     const clickRandomJoke = (value) => {
         setSearchParams({random: value});
+    }
+
+    const showLeaderBoard = (value) => {
+        setSearchParams({leaderboard: value})
     }
 
     const handleNewJokeClick = () => {
@@ -66,6 +71,7 @@ const Header = ({categories, isAuthenticated, handleLogout, jokeCount}) => {
                                     </NavDropdown.Item>
                                 ))}
                             </NavDropdown>
+                            <Nav.Link onClick={() => showLeaderBoard("true")}>LeaderBoard</Nav.Link>
                             <Nav.Link onClick={() => clickRandomJoke("true")}>Random joke</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>

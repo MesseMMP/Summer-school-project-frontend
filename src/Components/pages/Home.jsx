@@ -10,15 +10,16 @@ const Home = ({isAuthenticated}) => {
 
     const searchParams = useSearchParams()[0];
 
-    useEffect(() => {
-        setSelectedCategory(searchParams.get('filter'));
-        setShowRandomJoke(Boolean(searchParams.get('random')));
-    }, [searchParams]);
-
-
     const [jokes, SetJokes] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('All');
     const [showRandomJoke, setShowRandomJoke] = useState(false);
+    const [showLeaderBoard, setShowLeaderBoard] = useState(false);
+
+    useEffect(() => {
+        setSelectedCategory(searchParams.get('filter'));
+        setShowRandomJoke(Boolean(searchParams.get('random')));
+        setShowLeaderBoard(Boolean(searchParams.get('leaderboard')));
+    }, [searchParams]);
 
     const getJokes = async () => {
         const response = await axios.get(`http://127.0.0.1:8008/jokes`)
@@ -31,16 +32,7 @@ const Home = ({isAuthenticated}) => {
         getJokes()
     }, [])
 
-    const [likeCounts, setLikeCounts] = useState({}); // Состояние для хранения количества лайков
     const [likeStates, setLikeStates] = useState({}); // Состояние для хранения состояний лайков
-
-    const getLikesCount = async (jokeId) => {
-        const response = await axios.get(`http://127.0.0.1:8008/likes-for/${jokeId}`)
-        if (response.status === 200) {
-            return response.data.likes
-        }
-        return 0
-    }
 
     // Функция для получения состояний лайков для конкретного анекдота
     const getLikeState = async (jokeId) => {
@@ -64,32 +56,40 @@ const Home = ({isAuthenticated}) => {
 
     // Получение и сохранение количества лайков и состояний для каждого анекдота
     useEffect(() => {
-        const fetchLikesAndStatesForJokes = async () => {
-            const likes = {};
+        const fetchLikesForJokes = async () => {
             const states = {};
             for (const joke of jokes) {
-                const likesCount = await getLikesCount(joke.id);
-                const likeState = await getLikeState(joke.id);
-                likes[joke.id] = likesCount;
-                states[joke.id] = likeState;
+                states[joke.id] = await getLikeState(joke.id);
             }
-            setLikeCounts(likes);
             setLikeStates(states);
         };
-        fetchLikesAndStatesForJokes();
+        fetchLikesForJokes();
     }, [jokes]);
 
+    const fetchTopJokes = async () => {
+        try {
+            const response = await axios.get('http://127.0.0.1:8008/top-jokes');
+            setFilteredJokes(response.data.jokes);
+        } catch (error) {
+            console.error('Error fetching top jokes', error);
+        }
+    };
 
-    // Фильтрация анекдотов по выбранной категории
-    let filteredJokes = selectedCategory === null
-    || selectedCategory === 'All'
-        ? jokes
-        : jokes.filter(joke => joke.tags.includes(selectedCategory));
+    const [filteredJokes, setFilteredJokes] = useState([]);
 
-    if (showRandomJoke) {
-        const randomIndex = Math.floor(Math.random() * jokes.length);
-        filteredJokes = jokes.slice(randomIndex, randomIndex + 1);
-    }
+    useEffect(() => {
+        if (selectedCategory !== undefined && selectedCategory !== null && selectedCategory !== "All") {
+            setFilteredJokes(jokes.filter(joke => joke.tags.includes(selectedCategory)))
+        } else if (showRandomJoke) {
+            const randomIndex = Math.floor(Math.random() * jokes.length);
+            setFilteredJokes(jokes.slice(randomIndex, randomIndex + 1));
+        } else if (showLeaderBoard) {
+            fetchTopJokes()
+        } else {
+            setFilteredJokes(jokes);
+        }
+    }, [selectedCategory, showRandomJoke, showLeaderBoard, jokes]);
+
 
     // Вычисляем индекс первого и последнего анекдота на текущей странице
     const indexOfLastJoke = currentPage * jokesPerPage;
@@ -129,7 +129,7 @@ const Home = ({isAuthenticated}) => {
                     text={joke.text}
                     tags={joke.tags}
                     date={joke.date}
-                    likes={likeCounts[joke.id]}
+                    likes={joke.likes}
                     isLiked={likeStates[joke.id]}
                     isAuthenticated={isAuthenticated}
                     userId={joke.userId}
