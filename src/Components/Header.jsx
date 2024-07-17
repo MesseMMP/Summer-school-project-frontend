@@ -15,7 +15,6 @@ const Header = ({categories, isAuthenticated, handleLogout}) => {
     const navigate = useNavigate();
 
     const clickCategoryHandler = (filterValue) => {
-        setSearchParams({filter: filterValue});
         navigate(`/?filter=${filterValue}`);
     }
 
