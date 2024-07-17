@@ -79,7 +79,7 @@ const App = () => {
             const expirationDate = getTokenExpirationDate(token);
             const timeLeft = expirationDate - now;
 
-            if (timeLeft <= 0) {
+            if (timeLeft <= 0 && isAuthenticated) {
                 toast.error("Your session has expired. Please log in again.");
                 handleLogout();
             }
