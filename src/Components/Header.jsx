@@ -16,14 +16,15 @@ const Header = ({categories, isAuthenticated, handleLogout}) => {
 
     const clickCategoryHandler = (filterValue) => {
         setSearchParams({filter: filterValue});
+        navigate(`/?filter=${filterValue}`);
     }
 
     const clickRandomJoke = (value) => {
-        setSearchParams({random: value});
+        navigate(`/?random=${value}`);
     }
 
     const showLeaderBoard = (value) => {
-        setSearchParams({leaderboard: value})
+        navigate(`/?leaderboard=${value}`);
     }
 
     const handleNewJokeClick = () => {
