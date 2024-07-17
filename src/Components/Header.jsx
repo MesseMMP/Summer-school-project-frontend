@@ -6,11 +6,9 @@ import {
     NavDropdown,
 } from "react-bootstrap";
 import logo from "../img/logo.svg";
-import {useNavigate, useSearchParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const Header = ({categories, isAuthenticated, handleLogout}) => {
-
-    const setSearchParams = useSearchParams()[1];
 
     const navigate = useNavigate();
 
