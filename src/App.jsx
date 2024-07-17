@@ -84,8 +84,7 @@ const App = () => {
                 handleLogout();
             }
             // Если осталось меньше 2 минут, выводит предупреждения
-            //else if (timeLeft <= 2 * 1000 * 60) {
-            else {
+            else if (timeLeft <= 2 * 1000 * 60) {
                 const hours = Math.floor(timeLeft / (1000 * 60 * 60));
                 const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
