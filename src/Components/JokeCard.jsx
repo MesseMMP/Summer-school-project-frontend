@@ -4,7 +4,7 @@ import './JokeCard.css';
 import axios from "axios";
 import likedIcon from '../img/liked.svg'
 import unlikedIcon from '../img/unliked.svg'
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 
 const JokeCard = ({
                       jokeId,
@@ -47,14 +47,10 @@ const JokeCard = ({
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             });
-            toast.success(response.data.message, {
-                position: toast.POSITION.TOP_RIGHT,
-            });
+            toast.success(response.data.message);
             getJokesAgain()
         } catch (error) {
-            toast.error('An error occurred while deleting the joke!', {
-                position: toast.POSITION.TOP_RIGHT,
-            });
+            toast.error('An error occurred while deleting the joke!');
         }
     };
 
