@@ -16,7 +16,6 @@
 - Flask
 - SQLAlchemy
 - Flask-JWT-Extended
-- SQLite
 - Flasgger
 
 ### Мобильная версия (iOS)
@@ -42,7 +41,7 @@
 1. Скачайте код [Backend репозиторий](https://github.com/MesseMMP/Summer-school-project-backend)
 2. Установите зависимости:
     ```bash
-    pip install -r requirements.txt
+    pip install Flask SQLAlchemy Flask-JWT-Extended Flasgger
     ```
 
 3. Запустите сервер:
