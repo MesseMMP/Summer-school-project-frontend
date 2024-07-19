@@ -41,7 +41,7 @@
 1. Скачайте код [Backend репозиторий](https://github.com/MesseMMP/Summer-school-project-backend)
 2. Установите зависимости:
     ```bash
-    pip install Flask SQLAlchemy Flask-JWT-Extended Flasgger
+    pip install Flask SQLAlchemy Flask-JWT-Extended Flasgger Flask-Cors Flask-Bcrypt Flask-Migrate
     ```
 
 3. Запустите сервер:
