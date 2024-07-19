@@ -19,31 +19,42 @@
 - SQLite
 - Flasgger
 
+### Мобильная версия (iOS)
+- SwiftUI
+
 ## Установка и запуск проекта
 
 ### Frontend
 
-1. Установите зависимости:
+1. Скачайте код [Frontend репозиторий](https://github.com/MesseMMP/Summer-school-project-frontend)
+2. Установите зависимости:
     ```bash
     npm install
     ```
 
-2. Запустите проект:
+3. Запустите проект:
     ```bash
     npm start
     ```
 
 ### Backend
 
-1. Установите зависимости:
+1. Скачайте код [Backend репозиторий](https://github.com/MesseMMP/Summer-school-project-backend)
+2. Установите зависимости:
     ```bash
     pip install -r requirements.txt
     ```
 
-2. Запустите сервер:
+3. Запустите сервер:
     ```bash
     python app.py
     ```
+
+### iOS приложение
+
+1. Скачайте код [iOS репозиторий](https://github.com/realINL/summer_school_jokes_ios)
+2. Откройте проект в Xcode.
+3. Соберите и запустите приложение на эмуляторе или устройстве.
 
 ## Функциональность
 
